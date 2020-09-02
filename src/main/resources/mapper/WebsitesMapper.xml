@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace= 绑定一个对应的DAO/Mapper接口 -->
+<mapper namespace="cn.fangshirui.navweb.mapper.WebsitesMapper">
+
+
+    <select id="queryWebsite" resultType="cn.fangshirui.navweb.pojo.Website" parameterType="cn.fangshirui.navweb.pojo.Website">
+        select * from website where id = #{id};
+    </select>
+
+    <insert id="addWebsite" parameterType="cn.fangshirui.navweb.pojo.Website" >
+        insert into website (name, url, tagId, `order`, dateTime)
+        VALUES (#{name}, #{url}, #{tagId}, #{order}, #{dateTime})
+    </insert>
+
+
+
+    <delete id="deleteWebsite" parameterType="int" >
+
+        set @a = (select `order` from website where id = #{id});
+        delete from website where id = #{id};
+        update website set `order` = `order` - 1 where `order` > @a;
+    </delete>
+
+    <select id="queryAllWebsite" resultType="cn.fangshirui.navweb.pojo.Website">
+        select * from website
+        order by `order`
+    </select>
+
+    <update id="updateWebsite" parameterType="cn.fangshirui.navweb.pojo.Website">
+        update website set name = #{name}, url = #{url}
+        where id = #{id}
+    </update>
+
+
+    <select id="queryWebsiteByTagId" resultType="cn.fangshirui.navweb.pojo.Website" parameterType="int">
+        select * from website where tagId = #{tagId}
+        order by `order`
+    </select>
+
+
+
+
+
+    <!-- 操作分类-->
+
+
+
+
+    <resultMap id="TagPlus" type="cn.fangshirui.navweb.pojo.Tag">
+        <result property="tid" column="tid"/>
+        <result property="tname" column="tname"/>
+        <result property="torder" column="torder"/>
+
+
+        <collection property="websiteList" ofType="cn.fangshirui.navweb.pojo.Website">
+            <result property="id" column="id"/>
+            <result property="name" column="name"/>
+            <result property="url" column="url"/>
+            <result property="tagId" column="tid"/>
+            <result property="order" column="ord"/>
+            <result property="dateTime" column="time"/>
+        </collection>
+    </resultMap>
+
+
+    <select id="queryAllTag" resultMap="TagPlus">
+        select w.id id, w.name name , w.url url, w.`order` ord, w.dateTime time , t.tid tid, t.tname tname, t.torder torder
+        from tag t
+        left join website w
+        on t.tid = w.tagId
+        order by  `torder`, `order`
+    </select>
+
+
+
+    <select id="queryTag" resultMap="TagPlus"
+            parameterType="cn.fangshirui.navweb.pojo.Tag">
+        select w.id id, w.name name , w.url url, w.`order` ord, t.tid tid, t.tname tname, t.torder torder
+        from tag t
+        left join website w
+        on t.tname = w.tagId
+        where t.tid = #{tid}
+        order by `torder`, `order`
+    </select>
+
+    <update id="updateTagName" parameterType="cn.fangshirui.navweb.pojo.Tag">
+        update tag set tname = #{tname} where tid = #{tid}
+    </update>
+
+    <update id="updateOrderByIdAfter" parameterType="map">
+        update website set `order` = `order` - 1 where `order` &lt;= #{order} and `order` > #{oldOrder};
+        update website set `order` = #{order} where id = #{id};
+    </update>
+
+    <update id="updateOrderByIdBefore" parameterType="map">
+        update website set `order` = `order` + 1 where `order` >= #{order} and `order` &lt; #{oldOrder};
+        update website set `order` = #{order} where id = #{id};
+    </update>
+
+
+    <update id="updateTagOrderAfter" parameterType="cn.fangshirui.navweb.pojo.Tag">
+        set @oldOrder = (select `torder` from tag where tid = #{tid});
+        update tag set `torder` = `torder` - 1 where `torder` &lt;= #{torder} and `torder` > @oldOrder;
+        update tag set `torder` = #{torder} where tid = #{tid}
+    </update>
+    <update id="updateTagOrderBefore" parameterType="cn.fangshirui.navweb.pojo.Tag">
+        set @oldOrder = (select `torder` from tag where tid = #{tid});
+        update tag set `torder` = `torder` + 1 where `torder` >= #{torder} and `torder` &lt; @oldOrder;
+        update tag set `torder` = #{torder} where tid = #{tid}
+    </update>
+
+
+    <delete id="deleteTagById" parameterType="int">
+        set @a = (select `torder` from tag where tid = #{tid});
+        delete from tag where tid = #{tid};
+        update tag set `torder` = `torder` - 1 where `torder` > @a;
+    </delete>
+
+    <delete id="deleteWebsiteByTagId" parameterType="int">
+        delete from website where tagId = #{tid};
+    </delete>
+
+    <insert id="insertTag" parameterType="cn.fangshirui.navweb.pojo.Tag">
+        insert into tag (tname, torder)
+        values (#{tname}, #{torder})
+    </insert>
+
+    <select id="queryAllTagName" resultType="java.lang.String">
+        select tname from tag;
+    </select>
+
+    <select id="getMaxOrder" resultType="java.lang.Integer">
+        select max(`order`) from website;
+    </select>
+
+    <select id="getOrder" resultType="java.lang.Integer" parameterType="int">
+        select `order` from website where id = #{id}
+    </select>
+
+    <select id="getMaxOrderOfTag" resultType="java.lang.Integer">
+        select max(`torder`) from tag;
+    </select>
+
+    <select id="getTagOrder" resultType="java.lang.Integer" parameterType="int">
+        select `torder` from tag where tid = #{tid}
+    </select>
+
+</mapper>

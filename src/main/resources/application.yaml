@@ -1,0 +1,71 @@
+
+
+spring:
+  datasource:
+    username: test1
+    password: test123456
+    url: jdbc:mysql://fangshirui.cn:3306/school?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&useAffectedRows=true
+    driver-class-name: com.mysql.cj.jdbc.Driver # 驱动
+    type: com.alibaba.druid.pool.DruidDataSource  # 数据库连接池
+
+    druid:
+      # 内置监控页面
+      stat-view-servlet:
+        enabled: true
+        login-username: admin
+        login-password: 123456
+        url-pattern: /druid/*   # 默认就是这个访问url
+
+
+      # 一些过滤器
+      filter:
+        # 全名为 statFilter 用于统计监控信息 sql监控
+        stat:
+          enabled: true
+
+        # wall filter sql防火墙 防sql注入
+        wall:
+          enabled: true
+          config:
+            # 重要配置，允许多行语句
+            multi-statement-allow: true
+
+        # 用于输出JDBC执行的日志。 log4j log4j2 slf4j
+        log4j2:
+          enabled: true
+          statement-executable-sql-log-enable: true
+          statement-log-error-enabled: true
+
+
+
+      # 用于采集web-jdbc关联监控的数据
+      # 对应监控页面的 webURI
+      web-stat-filter:
+        enabled: true
+        # 这些url不进行统计
+        exclusions: '*.jpg,*.js,*.css,/druid/*,/webjars/*, *.html, /swagger-resource/*'
+
+
+# spring security
+  security:
+    user:
+      name: admin
+      password: 123456
+      roles: ADMIN
+
+
+
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: cn.fangshirui.navweb.pojo
+
+
+
+
+server:
+  port: 8081
+
+logging:
+  level:
+    cn.fangshirui.navweb.mapper : debug
