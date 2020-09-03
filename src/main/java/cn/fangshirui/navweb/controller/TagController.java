@@ -1,5 +1,6 @@
 package cn.fangshirui.navweb.controller;
 
+import cn.fangshirui.navweb.annotation.UserLoginToken;
 import cn.fangshirui.navweb.pojo.Tag;
 import cn.fangshirui.navweb.pojo.Website;
 import cn.fangshirui.navweb.result.ResultVO;
@@ -33,15 +34,15 @@ public class TagController {
 
 
     @ApiOperation("请求某个分类下的所有网站")
-    @GetMapping("/getTagById/{tagId}")
-    public ResultVO<Object> getWeb(@PathVariable("tagId") int id) {
+    @GetMapping("/getTagById")
+    public ResultVO<Object> getWeb(@RequestParam("tagId") int id) {
 
         List<Website> websiteList = websitesServices.getWebsiteByTagId(id);
 
         return ResultVOUtils.success(websiteList);
     }
 
-
+    @UserLoginToken
     @ApiOperation("请求所有分类下的所有网站")
     @GetMapping("tag")
     public ResultVO<Object> getAllTag() {
@@ -52,10 +53,29 @@ public class TagController {
     }
 
 
+    @ApiOperation("请求公开分类下的所有网站")
+    @GetMapping("openTag")
+    public ResultVO<Object> getOpenTag() {
+        List<Tag> webTag = websitesServices.getAllTag();
+        webTag.remove(0);
+
+        return ResultVOUtils.success(webTag);
+
+    }
+
+
+    @UserLoginToken
     @ApiOperation("更新分类名以及顺序")
     @PutMapping("tag")
-    public ResultVO<Object> updateTagName(Tag tag) {
-        // 使用三个属性  tid tname torder
+    public ResultVO<Object> updateTagName(@RequestParam("tid") int tid
+            , @RequestParam("tname") String tname, @RequestParam("torder") int torder) {
+
+        // 使用三个属性 tid tname torder
+        Tag tag = new Tag();
+        tag.setTid(tid);
+        tag.setTname(tname);
+        tag.setTorder(torder);
+
         websitesServices.updateTagName(tag);
         websitesServices.adjustTagOrder(tag);
 
@@ -64,6 +84,7 @@ public class TagController {
     }
 
 
+    @UserLoginToken
     @ApiOperation("添加新的分类")
     @PostMapping("tag")
     public ResultVO<Object> insertTag(String tname) {
@@ -79,6 +100,7 @@ public class TagController {
 
     }
 
+    @UserLoginToken
     @ApiOperation("删除某分类以及其下的所有网站")
     @DeleteMapping("tag")
     public ResultVO<Object> deleteTag(int tid) {

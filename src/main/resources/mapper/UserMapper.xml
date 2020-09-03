@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace= 绑定一个对应的DAO/Mapper接口 -->
+<mapper namespace="cn.fangshirui.navweb.mapper.UserMapper">
+
+
+    <resultMap id="UserPlus" type="cn.fangshirui.navweb.pojo.User">
+        <result column="id" property="id"/>
+        <result column="name" property="username"/>
+        <result column="pwd" property="password"/>
+    </resultMap>
+
+    <select id="findByUsername" resultMap="UserPlus" parameterType="java.lang.String">
+        SELECT * FROM users
+        where name = #{username}
+    </select>
+
+    <select id="findUserById" resultMap="UserPlus" >
+        select * from users
+        where id = #{id}
+    </select>
+</mapper>

@@ -1,5 +1,6 @@
 package cn.fangshirui.navweb.controller;
 
+import cn.fangshirui.navweb.annotation.UserLoginToken;
 import cn.fangshirui.navweb.pojo.Website;
 import cn.fangshirui.navweb.result.ResultVO;
 import cn.fangshirui.navweb.result.ResultVOUtils;
@@ -28,6 +29,7 @@ public class WebsiteController {
     }
 
 
+    @UserLoginToken
     @DeleteMapping("/website")
     public ResultVO<Object> deleteWebsite(int id) {
 
@@ -38,6 +40,8 @@ public class WebsiteController {
     }
 
 
+
+    @UserLoginToken
     @PostMapping("/website")
     public ResultVO<Object> addWeb(Website website) {
 
@@ -50,6 +54,7 @@ public class WebsiteController {
 
     }
 
+    @UserLoginToken
     @PutMapping("/website")
     public ResultVO<Object> updateWeb(Website website) {
         // 主要使用到其中4个值
