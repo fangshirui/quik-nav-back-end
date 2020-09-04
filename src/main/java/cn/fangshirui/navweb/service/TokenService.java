@@ -6,6 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * 令牌服务
@@ -18,8 +19,10 @@ public class TokenService {
 
     /**
      * 根密码
+     * 随机生成，每次重启网站服务都会新建一个根密码。此时所有用户以前登陆的token全部失效。
+     * 必须重新登陆
      */
-    public static final String ROOT_PASSWORD = "b977f4b13f93f549e06140971bded384";
+    public static final String ROOT_PASSWORD = UUID.randomUUID().toString().toLowerCase();
 
     public String getToken(User user) {
         String token;
