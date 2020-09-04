@@ -43,20 +43,26 @@ public interface WebsitesServices {
 
 
     /**
-     * 获得所有标签的网站
+     * 获得所有分类的网站
      *
      * @return {@link List<Tag>}
      */
     List<Tag> getAllTag();
 
 
+    /**
+     * 得到开放分类
+     *
+     * @return {@link List<Tag>}
+     */
+    List<Tag> getOpenTag();
 
     /**
-     * 更新标签名
+     * 更新标签名以及是否是保密分类
      *
      * @param tag 标签
      */
-    void updateTagName(Tag tag);
+    void updateTag(Tag tag);
 
 
     /**
@@ -81,9 +87,8 @@ public interface WebsitesServices {
      * 不仅包括删除分类，也删除分类下的网站条目
      *
      * @param tid tid
-     * @return int
      */
-    int deleteTag(int tid);
+    void deleteTag(int tid);
 
 
 

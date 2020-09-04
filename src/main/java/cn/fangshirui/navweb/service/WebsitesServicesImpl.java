@@ -60,11 +60,15 @@ public class WebsitesServicesImpl implements WebsitesServices {
         return websitesMapper.queryAllTag();
     }
 
+    @Override
+    public List<Tag> getOpenTag() {
+        return websitesMapper.queryOpenTag();
+    }
 
     @Override
-    public void updateTagName(Tag tag) {
+    public void updateTag(Tag tag) {
 
-        websitesMapper.updateTagName(tag);
+        websitesMapper.updateTag(tag);
 
     }
 
@@ -82,9 +86,9 @@ public class WebsitesServicesImpl implements WebsitesServices {
     }
 
     @Override
-    public int deleteTag(int tid) {
+    public void deleteTag(int tid) {
         websitesMapper.deleteWebsiteByTagId(tid);
-        return websitesMapper.deleteTagById(tid);
+        websitesMapper.deleteTagById(tid);
     }
 
 

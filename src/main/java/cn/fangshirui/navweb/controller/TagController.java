@@ -56,8 +56,7 @@ public class TagController {
     @ApiOperation("请求公开分类下的所有网站")
     @GetMapping("openTag")
     public ResultVO<Object> getOpenTag() {
-        List<Tag> webTag = websitesServices.getAllTag();
-        webTag.remove(0);
+        List<Tag> webTag = websitesServices.getOpenTag();
 
         return ResultVOUtils.success(webTag);
 
@@ -65,18 +64,20 @@ public class TagController {
 
 
     @UserLoginToken
-    @ApiOperation("更新分类名以及顺序")
+    @ApiOperation("更新分类名以及顺序以及是否私密")
     @PutMapping("tag")
     public ResultVO<Object> updateTagName(@RequestParam("tid") int tid
-            , @RequestParam("tname") String tname, @RequestParam("torder") int torder) {
+            , @RequestParam("tname") String tname, @RequestParam("torder") int torder
+        , @RequestParam("secret" ) int secret) {
 
         // 使用三个属性 tid tname torder
         Tag tag = new Tag();
         tag.setTid(tid);
         tag.setTname(tname);
         tag.setTorder(torder);
+        tag.setSecret(secret);
 
-        websitesServices.updateTagName(tag);
+        websitesServices.updateTag(tag);
         websitesServices.adjustTagOrder(tag);
 
         List<Tag> tags = websitesServices.getAllTag();
@@ -87,10 +88,12 @@ public class TagController {
     @UserLoginToken
     @ApiOperation("添加新的分类")
     @PostMapping("tag")
-    public ResultVO<Object> insertTag(String tname) {
+    public ResultVO<Object> insertTag( @RequestParam("tname")  String tname
+        , @RequestParam("secret") int secret) {
         // 主要使用到 tag中的 tname属性
         Tag tag = new Tag();
         tag.setTname(tname);
+        tag.setSecret(secret);
         if (websitesServices.insertTag(tag) > 0) {
             Object data = websitesServices.getAllTag();
             return ResultVOUtils.success(data);

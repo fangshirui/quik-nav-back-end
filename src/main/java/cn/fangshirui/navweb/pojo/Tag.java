@@ -23,6 +23,8 @@ public class Tag {
 
     private int torder;
 
+    private int secret;
+
     private List<Website> websiteList;
 
 }

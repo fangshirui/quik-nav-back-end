@@ -87,12 +87,20 @@ public interface WebsitesMapper {
 
 
     /**
-     * 更新标签名
+     * 查询开放分类，保密分类不查询
+     *
+     * @return {@link List<Tag>}
+     */
+    List<Tag> queryOpenTag();
+
+
+    /**
+     * 更新标签名以及保密分类信息
      *
      * @param tag 标签
      * @return {@link String}
      */
-    int updateTagName(Tag tag);
+    int updateTag(Tag tag);
 
 
     /**

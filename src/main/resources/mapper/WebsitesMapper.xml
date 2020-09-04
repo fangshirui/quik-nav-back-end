@@ -44,38 +44,6 @@
 
 
 
-    <!-- 操作分类-->
-
-
-
-
-    <resultMap id="TagPlus" type="cn.fangshirui.navweb.pojo.Tag">
-        <result property="tid" column="tid"/>
-        <result property="tname" column="tname"/>
-        <result property="torder" column="torder"/>
-
-
-        <collection property="websiteList" ofType="cn.fangshirui.navweb.pojo.Website">
-            <result property="id" column="id"/>
-            <result property="name" column="name"/>
-            <result property="url" column="url"/>
-            <result property="tagId" column="tid"/>
-            <result property="order" column="ord"/>
-            <result property="dateTime" column="time"/>
-        </collection>
-    </resultMap>
-
-
-    <select id="queryAllTag" resultMap="TagPlus">
-        select w.id id, w.name name , w.url url, w.`order` ord, w.dateTime time , t.tid tid, t.tname tname, t.torder torder
-        from tag t
-        left join website w
-        on t.tid = w.tagId
-        order by  `torder`, `order`
-    </select>
-
-
-
     <select id="queryTag" resultMap="TagPlus"
             parameterType="cn.fangshirui.navweb.pojo.Tag">
         select w.id id, w.name name , w.url url, w.`order` ord, t.tid tid, t.tname tname, t.torder torder
@@ -83,11 +51,11 @@
         left join website w
         on t.tname = w.tagId
         where t.tid = #{tid}
-        order by `torder`, `order`
     </select>
 
-    <update id="updateTagName" parameterType="cn.fangshirui.navweb.pojo.Tag">
-        update tag set tname = #{tname} where tid = #{tid}
+    <update id="updateTag" parameterType="cn.fangshirui.navweb.pojo.Tag">
+        update tag set tname = #{tname} where tid = #{tid};
+        update tag set secret = #{secret} where tid = #{tid};
     </update>
 
     <update id="updateOrderByIdAfter" parameterType="map">
@@ -124,8 +92,8 @@
     </delete>
 
     <insert id="insertTag" parameterType="cn.fangshirui.navweb.pojo.Tag">
-        insert into tag (tname, torder)
-        values (#{tname}, #{torder})
+        insert into tag (tname, torder, secret)
+        values (#{tname}, #{torder}, #{secret})
     </insert>
 
     <select id="queryAllTagName" resultType="java.lang.String">
@@ -146,6 +114,42 @@
 
     <select id="getTagOrder" resultType="java.lang.Integer" parameterType="int">
         select `torder` from tag where tid = #{tid}
+    </select>
+
+
+    <resultMap id="TagPlus" type="cn.fangshirui.navweb.pojo.Tag">
+        <result property="tid" column="tid"/>
+        <result property="tname" column="tname"/>
+        <result property="torder" column="torder"/>
+        <result property="secret" column="secret"/>
+
+
+        <collection property="websiteList" ofType="cn.fangshirui.navweb.pojo.Website">
+            <result property="id" column="id"/>
+            <result property="name" column="name"/>
+            <result property="url" column="url"/>
+            <result property="tagId" column="tid"/>
+            <result property="order" column="ord"/>
+            <result property="dateTime" column="time"/>
+        </collection>
+    </resultMap>
+
+
+    <select id="queryAllTag" resultMap="TagPlus">
+        select w.id id, w.name name , w.url url, w.`order` ord, w.dateTime time , t.tid tid, t.tname tname, t.torder torder, t.secret secret
+        from tag t
+        left join website w
+        on t.tid = w.tagId
+        order by  `torder`, `order`
+    </select>
+
+    <select id="queryOpenTag" resultMap="TagPlus">
+        select w.id id, w.name name , w.url url, w.`order` ord, w.dateTime time , t.tid tid, t.tname tname, t.torder torder, t.secret secret
+        from tag t
+        left join website w
+        on t.tid = w.tagId
+        where t.secret = 0
+        order by  `torder`, `order`
     </select>
 
 </mapper>
