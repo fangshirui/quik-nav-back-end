@@ -30,7 +30,7 @@
     </select>
 
     <update id="updateWebsite" parameterType="cn.fangshirui.navweb.pojo.Website">
-        update website set name = #{name}, url = #{url}
+        update website set name = #{name}, url = #{url}, tagId = #{tagId}
         where id = #{id}
     </update>
 

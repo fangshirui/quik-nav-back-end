@@ -66,7 +66,7 @@ public interface WebsitesServices {
 
 
     /**
-     * 更新网站条目
+     * 更新网站条目 url name tagId
      *
      * @param website 网站
      */

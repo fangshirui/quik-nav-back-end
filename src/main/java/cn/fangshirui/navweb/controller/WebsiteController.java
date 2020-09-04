@@ -57,10 +57,10 @@ public class WebsiteController {
     @UserLoginToken
     @PutMapping("/website")
     public ResultVO<Object> updateWeb(Website website) {
-        // 主要使用到其中4个值
-        // id url name order
+        // 主要使用到其中5个值
+        // id url name order tagId
 
-        // 更新name url信息
+        // 更新name url信息 tagId
         websitesServices.updateWebsite(website);
 
         int id = website.getId();
