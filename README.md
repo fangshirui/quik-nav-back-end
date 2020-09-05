@@ -1,6 +1,6 @@
 # QUIK导航
 
-![GitHub](https://img.shields.io/github/license/fangshirui/quik-nav-back-end)![GitHub repo size](https://img.shields.io/github/repo-size/fangshirui/quik-nav-back-end)
+![GitHub](https://img.shields.io/github/license/fangshirui/quik-nav-back-end?style=flat-square)![GitHub repo size](https://img.shields.io/github/repo-size/fangshirui/quik-nav-back-end?style=flat-square)
 
 ![image-20200904202434156](image/image-20200904202434156.png)
 
