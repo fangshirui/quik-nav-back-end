@@ -74,35 +74,21 @@ https://nav.fangshirui.cn
 
 ## 使用
 
-此仓库是项目的前端组成部分。
+此仓库是项目的后端组成部分。
 
 
-1. npm install
-
-2. npm build 
-
-3. 导出dist文件夹下的文件到Nginx服务器路径
-
-4. 配置Nginx反向代理
-
-    ```
-    location /api {
-      proxy_pass   http://127.0.0.1:8081/api;
-    }
-    ```
-
-    
+1. 在数据库中建表，在仓库根目录下有三个sql文件，可以帮助快速建表。字段名及表名不能修改。	4. 配置Nginx反向代理
+2. 修改springboot中的application.yml，配置自己数据库的连接信息
+3. run!
 
 
 
 ## 技术栈
 
-* Vue
-
-* axios
-
-* ElementUI
-
+* SpringBoot
+* JWT
+* MyBatis
+* MySQL
 
 
 
