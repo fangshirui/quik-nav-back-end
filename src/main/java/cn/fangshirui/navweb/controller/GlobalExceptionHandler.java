@@ -17,7 +17,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public Object handleException(Exception e) {
         String msg = e.getMessage();
-        if (msg == null || msg.equals("")) {
+        if (msg == null || "".equals(msg)) {
             msg = "服务器出错";
         }
 

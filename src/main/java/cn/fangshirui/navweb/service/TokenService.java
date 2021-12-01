@@ -28,9 +28,9 @@ public class TokenService {
         String token;
         // 将 user id 保存到 token 里面
         // 以 password 作为 token 的密钥
-        // expiresAt 设置过期时间 设置为一周
+        // expiresAt 设置过期时间 设置为一月
         token= JWT.create().withAudience( ((Integer)user.getId()).toString() )
-                .withExpiresAt(new Date(System.currentTimeMillis() + 60 * 1000 * 60 * 24 * 7))
+                .withExpiresAt(new Date(System.currentTimeMillis() + 60 * 1000 * 60 * 24 * 30L))
                 .sign(Algorithm.HMAC256(ROOT_PASSWORD));
         return token;
     }

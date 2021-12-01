@@ -6,7 +6,7 @@ import cn.fangshirui.navweb.result.ResultVO;
 import cn.fangshirui.navweb.result.ResultVOUtils;
 import cn.fangshirui.navweb.result.status.StatusCode;
 import cn.fangshirui.navweb.service.WebsitesServices;
-import cn.fangshirui.navweb.service.WebsitesServicesImpl;
+import cn.fangshirui.navweb.service.impl.WebsitesServicesImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

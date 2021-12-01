@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/api")
-public class UserLoginController {
+public class UserController {
     @Autowired
     UserService userService;
 
@@ -49,5 +49,14 @@ public class UserLoginController {
     @GetMapping("/getMessage")
     public String getMessage(){
         return "已经通过验证了";
+    }
+
+
+    @UserLoginToken
+    @PostMapping("/register")
+    public ResultVO<Object> register(@RequestParam("name") String name
+            , @RequestParam("pwd") String pwd ) {
+
+        return null;
     }
 }

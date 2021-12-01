@@ -8,17 +8,24 @@
 
     <resultMap id="UserPlus" type="cn.fangshirui.navweb.pojo.User">
         <result column="id" property="id"/>
-        <result column="name" property="username"/>
+        <result column="name" property="userName"/>
         <result column="pwd" property="password"/>
     </resultMap>
 
+    <insert id="addUser">
+        insert into users (name, pwd, money)
+        VALUES (#{name}, #{pwd}, 100)
+    </insert>
+
     <select id="findByUsername" resultMap="UserPlus" parameterType="java.lang.String">
         SELECT * FROM users
-        where name = #{username}
+        where name = #{name}
     </select>
 
     <select id="findUserById" resultMap="UserPlus" >
         select * from users
         where id = #{id}
     </select>
+
+
 </mapper>

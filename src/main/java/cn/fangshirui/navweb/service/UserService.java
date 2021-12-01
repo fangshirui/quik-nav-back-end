@@ -17,11 +17,16 @@ public class UserService {
     @Autowired
     UserMapper userMapper;
 
-    public User findByUsername(String username){
-        return userMapper.findByUsername(username);
+    public User findByUsername(String userName){
+        return userMapper.findByUsername(userName);
     }
 
     public User findUserById(int id){
         return userMapper.findUserById(id);
     }
+
+    public void addUser(String userName, String pwd) {
+        userMapper.addUser(userName, pwd);
+    }
+
 }
